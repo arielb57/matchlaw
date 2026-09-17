@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --locked --release
+      - run: cargo test --locked
+      - name: Smoke-test the CLI
+        run: |
+          cargo run --release -- generate --seed 3 --events 5000 --out events.csv
+          cargo run --release -- run events.csv --stp decrement-and-cancel --out fills.csv
+          cargo run --release -- replay events.csv fills.csv --stp decrement-and-cancel
+          cargo run --release -- hunt --seeds 300 --len 400
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
+        with:
+          components: clippy, rustfmt
+      - run: cargo fmt --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
