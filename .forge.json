@@ -1,0 +1,30 @@
+{
+  "name": "matchlaw",
+  "tagline": "An executable spec for continuous matching engines: replay your fills, get the first rule broken",
+  "language": "rust",
+  "topics": [
+    "matching-engine",
+    "market-microstructure",
+    "order-book",
+    "differential-testing",
+    "rust",
+    "self-trade-prevention"
+  ],
+  "trendOrigin": "Trend 4 (gym-continuousDoubleAuction). Simulated double auctions are everywhere in RL and research code, but nobody checks that the engine underneath actually follows exchange semantics. The part worth building is the referee, not another market simulator.",
+  "gate": {
+    "stats": {
+      "sourceFiles": 16,
+      "testFiles": 6,
+      "testCases": 45,
+      "assertions": 113,
+      "readmeWords": 2089,
+      "testsPassed": true,
+      "lintPassed": true,
+      "entryPointRuns": true
+    },
+    "warnings": [
+      "the spec promised a benchmark and none is present"
+    ]
+  },
+  "generatedAt": "2026-09-17T01:32:01.730Z"
+}
