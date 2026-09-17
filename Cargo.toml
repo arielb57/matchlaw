@@ -1,0 +1,26 @@
+[package]
+name = "matchlaw"
+version = "0.1.0"
+edition = "2021"
+description = "An executable spec for continuous matching engines: replay your fills, get the first rule broken"
+license = "MIT"
+readme = "README.md"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "matchlaw"
+path = "src/main.rs"
+
+[dependencies]
+
+# The differential suites run hundreds of thousands of streams through the oracle;
+# unoptimised builds make `cargo test` take many minutes.
+[profile.test]
+opt-level = 3
+debug-assertions = true
+overflow-checks = true
+
+[profile.dev]
+opt-level = 1
